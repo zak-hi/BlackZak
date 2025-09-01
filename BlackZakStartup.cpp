@@ -90,6 +90,7 @@ struct Deck //zz i think i should make this a class, that way when i deal i can 
     {
         Card* theReturnCard = myCards.back(); //zz get the last card in the vector and then delete it.
         myCards.pop_back();
+        numCards -=1;
         return theReturnCard;
     }
 };
@@ -125,7 +126,7 @@ void PrintTable( vector< vector< Card* > > aTable, int aPlayers )
     }
 }
 
-void PlayTurn( vector< vector < Card* > > aTable, int aNumOfPlayers, Deck* aDeck ) //zz i feel like a class would be better so i dont have to pass the deck around? or maybe return the scores? 
+void PlayTurn( vector< vector < Card* > > &aTable, int aNumOfPlayers, Deck *aDeck ) //zz i feel like a class would be better so i dont have to pass the deck around? or maybe return the scores? 
 {
     string theChoice;
     int thePlayerTurn = 0;
@@ -164,7 +165,6 @@ void PlayTurn( vector< vector < Card* > > aTable, int aNumOfPlayers, Deck* aDeck
         mFirstAsk = true;
         thePlayerTurn+=1;
         PrintTable( aTable, aNumOfPlayers ); 
- 
     }   
 
 }
@@ -206,7 +206,7 @@ int main()
 
     int theDealerTotalValue = theDealerCardHand1->numberValue + theDealerCardHand2->numberValue;
     cout<< theDealerTotalValue << "\n";
-    theDeck->numCards -= 4;
+    //theDeck->numCards -= 4;
     cout << theDeck->numCards << "\n";
 
     mTable.push_back( mDealerHand );
@@ -214,6 +214,7 @@ int main()
     PlayTurn( mTable, theNumOfPlayers, theDeck );
     PrintTable( mTable, theNumOfPlayers ); //so the problem with the way i set it up is that it does not actually modify the deck in memory... it is out of scope and forgets.
     //cause i need logic for how to make the hands happen and the deck updates... 
+    cout << theDeck->numCards << "\n"; //zz fixed it W
 
 
     return 0;
